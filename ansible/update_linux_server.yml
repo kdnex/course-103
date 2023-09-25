@@ -87,7 +87,8 @@
       when: false
 
     - name: Install curl
-      run: sudo apt-get install curl
+      shell: |
+        sudo apt-get install curl
       when: false
 
     - name: Install nmap
@@ -96,7 +97,8 @@
       when: false
 
     - name: Install required dependencies (GitHub cli)
-      run: sudo apt-get install apt-transport-https ca-certificates
+      shell: |
+        sudo apt-get install apt-transport-https ca-certificates
       when: false
 
     - name: Download and install GitHub cli
