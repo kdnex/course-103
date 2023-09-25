@@ -23,7 +23,7 @@
     prefix: a01
     course: d0026d # Computer System Administration
 
-    tasks:
+  tasks:
 
     - name: Update and Upgrade the System
       apt:
