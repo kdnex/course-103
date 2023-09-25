@@ -134,7 +134,8 @@ jobs:
 
       - name: Run Ansible playbook
         env:
-          ANSIBLE_INVENTORY: "ansible/inventory.yml"
+          ANSIBLE_CONFIG: "ansible/ansible.cfg"
+          # ANSIBLE_INVENTORY: "ansible/inventory.yml"
         run: |
           # adhoc one line command test
           ls -l ansible/
