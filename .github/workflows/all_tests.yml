@@ -33,7 +33,16 @@ jobs:
       - name: Test if Web site answers a ping request, but just send one ping request
         run: |
           # firewall is blocking ping to toddbooth.com, so we will fake it with google.com
-          ping -c 10 -W 5 google.com
+          ping -c 1 -W 5 google.com
+
+          ping_exit_status=$?
+
+          if [ $ping_exit_status -eq 0 ]; then
+            echo "Ping successful."
+          else
+            echo "Ping failed."
+            exit 1  # Fail the GitHub Actions task
+          fi
 
       - name: Test if Web site ports 80 and 443 are listening
         if: false
