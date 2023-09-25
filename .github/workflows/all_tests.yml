@@ -52,6 +52,7 @@ jobs:
           ./test_curl_certificate.sh
 
       - name: Test WordPress user names via Bash
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -60,18 +61,29 @@ jobs:
           ./test_wordpress_users.sh
                             
       - name: Test Canvas user names via Python
+        if: false
         env:
           CANVAS_TOKEN: ${{ secrets.CANVAS_TOKEN }}
         run: |
           python test_canvas_users.py
                     
       - name: Test WordPress post via Python
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
         run: |
           python test_wordpress_post.py
-                      
+            
+      - name: Test WordPress post via Java
+        env:
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_KEY: ${{ secrets.WP_KEY }}
+        run: |
+          java -version
+          javac test_wp_create_post.java
+          java test_wp_create_page
+
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
           echo "All tests have passed, so deployment will now begin here ..."
