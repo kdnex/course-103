@@ -123,6 +123,8 @@ jobs:
         run: |
           pwd
           ls -l ~
+          echo "home: $HOME"
+          echo "home2: ~"
           echo "SSH_HOME: $SSH_HOME"
           echo "SSH_WORDPRESS_KEY: $SSH_WORDPRESS_KEY"
 
