@@ -33,7 +33,7 @@ jobs:
       - name: Test if Web site answers a ping request, but just send one ping request
         run: |
           # firewall is blocking ping to toddbooth.com, so we will fake it with google.com
-          ping -c 1 -W 3 google.com
+          ping -c 10 -W 5 google.com
 
       - name: Test if Web site ports 80 and 443 are listening
         if: false
