@@ -44,13 +44,12 @@ for user in users_data:
 
     # Access the 'name' key within each user dictionary
     # print(user['name'])
+    name=user['name']
+    print (f"name: {name}")
 
-    # Access the 'sis_user_id' key within each user dictionary
-    # print(user['sis_user_id'])
-
-    # Access the 'sis_user_id' key within each user dictionary and verify that it is "maharg-3"
-    if user['email'] == "maharg-3@ltu.se":
-        print(user['sis_user_id'])
+    # Access the 'name' key within each user dictionary and verify that it is "maharg-3"
+    if name == "Alrub Ahmad Ibrahim Abu":
+        print(name)
         sys.exit(0)
 
 print("No user with sys_user_id 'maharg-3' found.")
