@@ -24,6 +24,27 @@
 
   tasks:
 
+    - name: mkdir test - first create directory structure
+      shell: |
+        cd /tmp
+        mkdir dir1
+        mkdir dir2
+        mkdir dir3
+        mkdir dir1/dir1-sub
+        mkdir dir2/dir2-sub
+        tree .
+      register: mkdir
+      # when: false
+            
+    - name: Output mkdir test
+      debug: |
+        msg "${{ mkdir.stdout }}"
+      # when: false
+            
+    - name: Stop playbook execution
+      meta: end_play
+      # when: false
+  
     - name: Update and Upgrade the System
       apt:
         update_cache: yes
@@ -64,23 +85,6 @@
         sudo apt-get install tree
       # when: false
 
-    - name: mkdir test - first create directory structure
-      shell: |
-        cd /tmp
-        mkdir dir1
-        mkdir dir2
-        mkdir dir3
-        mkdir dir1/dir1-sub
-        mkdir dir2/dir2-sub
-        tree .
-      register: mkdir
-      # when: false
-            
-    - name: Output mkdir test
-      shell: |
-        echo ${{ steps.mkdir.stdout }}      
-      # when: false
-            
     - name: Install tcpdump
       shell: |
         sudo apt-get install tcpdump
