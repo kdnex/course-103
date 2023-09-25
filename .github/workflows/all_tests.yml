@@ -31,9 +31,10 @@ jobs:
           ./test_dig_resolve_ip.sh
 
       - name: Test if Web site answers a ping request, but just send one ping request
+        if: false
         run: |
-          # firewall is blocking ping to toddbooth.com, so we will fake it with aws.com
-          ping -c 1 -W 5 aws.com
+          # runner is in Azure, which disables outgoing icmp packets
+          ping -c 1 -W 5 toddbooth.com
 
           ping_exit_status=$?
 
@@ -99,6 +100,20 @@ jobs:
           # java -version
           javac WordPressPageCreation.java
           java WordPressPageCreation
+          
+      - name: Set up AWS CLI
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1  # Change to your desired AWS region
+        run: |
+          echo "[default]
+          aws_access_key_id = $AWS_ACCESS_KEY_ID
+          aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+          region = $AWS_DEFAULT_REGION" > ~/.aws/credentials
+
+      - name: List S3 buckets
+        run: aws s3 ls | grep toddsweb
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
