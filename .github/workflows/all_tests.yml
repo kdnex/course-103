@@ -33,7 +33,7 @@ jobs:
       - name: Test if Web site answers a ping request, but just send one ping request
         if: false
         run: |
-          # runner is in Azure, which disables outgoing icmp packets
+          # runner is in Azure, which disables outgoing icmp packets, so this will not work from GitHub actions
           ping -c 1 -W 5 toddbooth.com
 
           ping_exit_status=$?
@@ -117,26 +117,25 @@ jobs:
           ansible --version
 
       - name: Set up SSH
+        if: false
         env:
           SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
           # SSH_HOME: /home/runner/work/course-103/course-103/.ssh
         run: |
           # home is /home/runner
-          # echo "SSH_HOME: $SSH_HOME"
-          echo "SSH_WORDPRESS_KEY: $SSH_WORDPRESS_KEY"
 
           mkdir ~/.ssh
           echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
           chmod 600 ~/.ssh/wordpress.pem
+          cp .ssh/config ~/.ssh/config
           ls -l ~/.ssh
 
-          cp .ssh/config ~/.ssh/config
-
-          ssh -t wordpress 'echo "Hello"'
+          ssh -t wordpress 'echo "Hello bitnami Wordpress server"'
 
       - name: Run Ansible playbook
-        if: false
-        run: ansible-playbook -i ansible/inventory.ini ansible/test_playbook.yml
+        run: |
+          # ansible-playbook -i ansible/inventory.ini ansible/test_playbook.yml
+          ansible -i ansible/inventory.ini wordpress -m command -a "echo Hello"
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
