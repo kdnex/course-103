@@ -102,104 +102,126 @@
       when: false
 
     - name: Download and install GitHub cli
-      run: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && sudo apt-add-repository https://cli.github.com/packages && sudo apt-get update && sudo apt-get install gh
+      shell: |
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && sudo apt-add-repository https://cli.github.com/packages && sudo apt-get update && sudo apt-get install gh
       when: false
 
     - name: Install software-properties-common (ansible)
-      run: sudo apt-get install software-properties-common
+      shell: |
+        sudo apt-get install software-properties-common
       when: false
 
     - name: Add ansible PPA
-      run: sudo apt-add-repository --yes --update ppa:ansible/ansible
+      shell: |
+        sudo apt-add-repository --yes --update ppa:ansible/ansible
       when: false
 
     - name: Update apt cache if new PPA added (ansible)
-      run: sudo apt-get update
+      shell: |
+        sudo apt-get update
       when: false
 
     - name: Install Ansible
-      run: sudo apt-get install ansible
+      shell: |
+        sudo apt-get install ansible
       when: false
 
     - name: Install Ansible AWS collection
-      run: ansible-galaxy collection install community.aws
+      shell: |
+        ansible-galaxy collection install community.aws
       when: false
 
     - name: Install Python3 pip
-      run: sudo apt-get install python3-pip
+      shell: |
+        sudo apt-get install python3-pip
       when: false
 
     - name: Install AWS CLI using pip3
-      run: sudo pip3 install awscli
+      shell: |
+        sudo pip3 install awscli
       when: false
 
     - name: Install Python aws dependencies - botocore
-      run: sudo pip3 install botocore
+      shell: |
+        sudo pip3 install botocore
       when: false
 
     - name: Install Python aws dependencies - boto3
-      run: sudo pip3 install boto3
+      shell: |
+        sudo pip3 install boto3
       when: false
 
     - name: Install Python sql dependencies - PyMySql
-      run: sudo pip3 install PyMySql
+      shell: |
+        sudo pip3 install PyMySql
       when: false
 
     # - name: Install docker
     #   ...
 
     - name: Install Docker dependencies
-      run: sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+      shell: |
+        sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
       when: false
 
     - name: Add Docker GPG key
-      run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      shell: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
       when: false
 
     - name: Add Docker APT repository
-      run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      shell: |
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
       when: false
 
     - name: Install Docker
-      run: sudo apt-get update && sudo apt-get install docker-ce
+      shell: |
+        sudo apt-get update && sudo apt-get install docker-ce
       when: false
 
     - name: Start and enable Docker service
-      run: sudo systemctl start docker && sudo systemctl enable docker
+      shell: |
+        sudo systemctl start docker && sudo systemctl enable docker
       when: false
 
     - name: Ensure user sami exists
-      run: sudo useradd -m sami.kabir
+      shell: |
+        sudo useradd -m sami.kabir
       when: false
 
     # - name: Allow sami.kabir to sudo to d7001d users without a password
     #   run: echo "sami.kabir ALL=(%d7001d) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 
     - name: Ensure user todd27 exists
-      run: sudo useradd -m todd27
+      shell: |
+        sudo useradd -m todd27
       when: false
 
     # - name: Allow todd27 to sudo without a password
     #   run: echo "todd27 ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 
     - name: Ensure group "lp1-students" exists
-      run: sudo groupadd lp1-students
+      shell: |
+        sudo groupadd lp1-students
       when: false
 
     - name: Ensure group "d7001d" exists
-      run: sudo groupadd d7001d
+      shell: |
+        sudo groupadd d7001d
       when: false
 
     - name: Ensure group "d0026d" exists
-      run: sudo groupadd d0026d
+      shell: |
+        sudo groupadd d0026d
       when: false
 
     - name: Ensure group "a01" exists
-      run: sudo groupadd a01
+      shell: |
+        sudo groupadd a01
       when: false
 
     - name: Retrieve db secrets from AWS Secrets Manager
-      run: |
+      shell: |
         my_secret=$(aws secretsmanager get-secret-value --secret-id db_credentials --query SecretString --output text)
         export db_host=$(echo $my_secret | jq -r '.db_host')
         export db_user=$(echo $my_secret | jq -r '.db_user')
@@ -207,7 +229,8 @@
       when: false
 
     - name: Test aws s3
-      run: aws s3 ls
+      shell: |
+        aws s3 ls
       when: false
 
     - name: Fetch students from the course table
