@@ -1,10 +1,13 @@
-all:
+ungrouped:
   hosts:
     wordpress:
-      ansible_host: fail1.toddbooth.com
-      ansible_user: bitnami
-      # ansible_ssh_private_key_file: ~/.ssh/wordpress.pem
-    localhost:
-    server2:
-      ansible_host: 192.168.1.102
-
+    toddbooth.com:
+webservers:
+  hosts:
+    foo.example.com:
+    bar.example.com:
+dbservers:
+  hosts:
+    one.example.com:
+    two.example.com:
+    three.example.com:
