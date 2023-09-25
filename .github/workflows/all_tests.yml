@@ -135,11 +135,14 @@ jobs:
       - name: Run Ansible playbook
         env:
           ANSIBLE_CONFIG: "ansible/ansible.cfg"
-          # ANSIBLE_INVENTORY: "ansible/inventory.yml"
         run: |
           # adhoc one line command test
           ls -l ansible/
-          ansible -vvv wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
+          
+          # Use 'set -e' to exit immediately if any command fails
+          set -e
+          
+          ansible -vvv wordpress -m command -a "echo2 Hello bitnami Wordpress server from Ansible."
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |

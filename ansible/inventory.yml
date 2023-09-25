@@ -2,5 +2,4 @@ ungrouped:
   hosts:
     wordpress:
       ansible_host: wordpress
-      # ansible_user: bitnami
     
