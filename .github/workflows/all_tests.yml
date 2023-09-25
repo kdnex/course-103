@@ -122,6 +122,10 @@ jobs:
           SSH_HOME: /home/runner/work/course-103/course-103/.ssh
         run: |
           pwd
+          ls -l ~
+          echo "SSH_HOME: $SSH_HOME"
+          echo "SSH_WORDPRESS_KEY: $SSH_WORDPRESS_KEY"
+
           echo "$SSH_WORDPRESS_KEY" > .ssh/wordpress.pem
           chmod 600 .ssh/wordpress.pem
           ls -l .ssh
