@@ -129,6 +129,9 @@ jobs:
           echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
           chmod 600 ~/.ssh/wordpress.pem
           ls -l ~/.ssh
+
+          cp .ssh/config ~/.ssh/config
+
           ssh -t wordpress 'echo "Hello"'
 
       - name: Run Ansible playbook
