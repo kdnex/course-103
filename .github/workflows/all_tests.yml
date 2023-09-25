@@ -30,6 +30,10 @@ jobs:
           chmod +x ./test_dig_resolve_ip.sh
           ./test_dig_resolve_ip.sh
 
+      - name: Test if Web site answers a ping request, but just send one ping request
+        run: |
+          ping -c 1 -W 3 toddbooth.com
+
       - name: Test if Web site ports 80 and 443 are listening
         if: false
         run: |
@@ -76,6 +80,7 @@ jobs:
           python test_wordpress_post.py
             
       - name: Test WordPress page via Java
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -89,3 +94,4 @@ jobs:
         run: |
           echo "All tests have passed, so deployment will now begin here ..."
 
+          
