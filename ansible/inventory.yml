@@ -1,6 +1,6 @@
 ungrouped:
   hosts:
     wordpress:
-      ansible_host: wordpress2
-      ansible_user: bitnami2
+      ansible_host: wordpress
+      ansible_user: bitnami
     
