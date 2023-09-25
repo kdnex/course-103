@@ -33,7 +33,7 @@
     - name: Update apt cache
       apt:
         update_cache: yes
-      when: false
+      # when: false
 
     - name: pwd
       shell: |
@@ -50,19 +50,19 @@
       apt: 
         name: unzip
         state: present
-      when: false
+      # when: false
 
     - name: Download and install sam-cli
       shell: |
         cd ~/big
         curl -L -o sam-cli.zip https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
         unzip sam-cli.zip -d sam-installation
-      when: false
+      # when: false
 
     - name: Install tree
       shell: |
         sudo apt-get install tree
-      when: false
+      # when: false
 
     - name: mkdir test - first create directory structure
       shell: |
@@ -74,87 +74,87 @@
         mkdir dir2/dir2-sub
         tree .
       register: mkdir
-      when: false
+      # when: false
             
     - name: Output mkdir test
       shell: |
         echo ${{ steps.mkdir.stdout }}      
-      when: false
+      # when: false
             
     - name: Install tcpdump
       shell: |
         sudo apt-get install tcpdump
-      when: false
+      # when: false
 
     - name: Install curl
       shell: |
         sudo apt-get install curl
-      when: false
+      # when: false
 
     - name: Install nmap
       shell: |
         sudo apt-get install nmap
-      when: false
+      # when: false
 
     - name: Install required dependencies (GitHub cli)
       shell: |
         sudo apt-get install apt-transport-https ca-certificates
-      when: false
+      # when: false
 
     - name: Download and install GitHub cli
       shell: |
         sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && sudo apt-add-repository https://cli.github.com/packages && sudo apt-get update && sudo apt-get install gh
-      when: false
+      # when: false
 
     - name: Install software-properties-common (ansible)
       shell: |
         sudo apt-get install software-properties-common
-      when: false
+      # when: false
 
     - name: Add ansible PPA
       shell: |
         sudo apt-add-repository --yes --update ppa:ansible/ansible
-      when: false
+      # when: false
 
     - name: Update apt cache if new PPA added (ansible)
       shell: |
         sudo apt-get update
-      when: false
+      # when: false
 
     - name: Install Ansible
       shell: |
         sudo apt-get install ansible
-      when: false
+      # when: false
 
     - name: Install Ansible AWS collection
       shell: |
         ansible-galaxy collection install community.aws
-      when: false
+      # when: false
 
     - name: Install Python3 pip
       shell: |
         sudo apt-get install python3-pip
-      when: false
+      # when: false
 
     - name: Install AWS CLI using pip3
       shell: |
         sudo pip3 install awscli
-      when: false
+      # when: false
 
     - name: Install Python aws dependencies - botocore
       shell: |
         sudo pip3 install botocore
-      when: false
+      # when: false
 
     - name: Install Python aws dependencies - boto3
       shell: |
         sudo pip3 install boto3
-      when: false
+      # when: false
 
     - name: Install Python sql dependencies - PyMySql
       shell: |
         sudo pip3 install PyMySql
-      when: false
+      # when: false
 
     # - name: Install docker
     #   ...
@@ -162,32 +162,32 @@
     - name: Install Docker dependencies
       shell: |
         sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-      when: false
+      # when: false
 
     - name: Add Docker GPG key
       shell: |
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-      when: false
+      # when: false
 
     - name: Add Docker APT repository
       shell: |
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-      when: false
+      # when: false
 
     - name: Install Docker
       shell: |
         sudo apt-get update && sudo apt-get install docker-ce
-      when: false
+      # when: false
 
     - name: Start and enable Docker service
       shell: |
         sudo systemctl start docker && sudo systemctl enable docker
-      when: false
+      # when: false
 
     - name: Ensure user sami exists
       shell: |
         sudo useradd -m sami.kabir
-      when: false
+      # when: false
 
     # - name: Allow sami.kabir to sudo to d7001d users without a password
     #   run: echo "sami.kabir ALL=(%d7001d) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
@@ -195,7 +195,7 @@
     - name: Ensure user todd27 exists
       shell: |
         sudo useradd -m todd27
-      when: false
+      # when: false
 
     # - name: Allow todd27 to sudo without a password
     #   run: echo "todd27 ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
@@ -203,22 +203,22 @@
     - name: Ensure group "lp1-students" exists
       shell: |
         sudo groupadd lp1-students
-      when: false
+      # when: false
 
     - name: Ensure group "d7001d" exists
       shell: |
         sudo groupadd d7001d
-      when: false
+      # when: false
 
     - name: Ensure group "d0026d" exists
       shell: |
         sudo groupadd d0026d
-      when: false
+      # when: false
 
     - name: Ensure group "a01" exists
       shell: |
         sudo groupadd a01
-      when: false
+      # when: false
 
     - name: Retrieve db secrets from AWS Secrets Manager
       shell: |
@@ -226,12 +226,12 @@
         export db_host=$(echo $my_secret | jq -r '.db_host')
         export db_user=$(echo $my_secret | jq -r '.db_user')
         export db_pass=$(echo $my_secret | jq -r '.db_pass')
-      when: false
+      # when: false
 
     - name: Test aws s3
       shell: |
         aws s3 ls
-      when: false
+      # when: false
 
     - name: Fetch students from the course table
       community.mysql.mysql_query:
@@ -243,7 +243,7 @@
             SELECT * FROM `{{ course }}`
             # SELECT * FROM `{{ course }}` LIMIT 1
       register: query_result
-      when: false
+      # when: false
 
     # Perform Ubuntu user management
 
@@ -252,7 +252,7 @@
       loop: "{{ query_result.query_result[0] }}"
       loop_control:
         loop_var: item
-      when: false
+      # when: false
 
     - name: Stop playbook execution
       meta: end_play
