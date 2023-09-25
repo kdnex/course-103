@@ -37,7 +37,7 @@
       # when: false
             
     - name: Output mkdir test
-      debug: |
+      debug:
         msg: "${{ mkdir.stdout }}"
       # when: false
             
