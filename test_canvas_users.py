@@ -29,8 +29,9 @@ headers = {
 }
 
 TIMEOUT_SECONDS = 5
+url = f"{BASE_URL}/courses/{COURSE_ID}/users"
 response = requests.get(
-    f"{BASE_URL}/courses/{COURSE_ID}/users",
+    url,
     headers=headers,
     timeout=TIMEOUT_SECONDS
 )
@@ -40,11 +41,12 @@ print(response.status_code)
 # Check if the response status code is 200 (OK) before attempting to parse the JSON response
 if response.status_code != 200:
     print(f"Request failed with status code {response.status_code}")
+    print(f"url: {url}")
     sys.exit(1)
 
-users_data = response.json()
+users = response.json()
 
-for user in users_data:
+for user in users:
 
     # Pretty print the JSON data
     # print(json.dumps(user, indent=4))

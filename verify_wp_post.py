@@ -1,5 +1,5 @@
 """
-This is a Python script that demonstrates basic usage of the WordPress API.
+This is a Python script that verifies that a student created a WordPress post.
 """
 
 import os
@@ -41,13 +41,6 @@ if STUDENT_ASSIGNED_NUMBER is None:
 # Define base URL
 BASE_URL = "https://toddbooth.com/wp-json/wp/v2"
 
-# Define the post data as a dictionary
-post_data = {
-    "title": f"Just A Random Post Title - (STUDENT_ASSIGNED_NUMBER: {STUDENT_ASSIGNED_NUMBER})",
-    "content": "This is the content of the new post.",
-    "status": "publish"
-}
-
 # Define the headers
 headers = {
     "Content-Type": "application/json"
@@ -55,6 +48,40 @@ headers = {
 
 # Create the HTTP Basic Authentication string
 auth_string = f"{WP_USERNAME}:{WP_KEY}"
+
+# retrive all the WordPress posts
+
+TIMEOUT_SECONDS = 5
+response = requests.get(
+    f"{BASE_URL}/posts",
+    headers=headers,
+    timeout=TIMEOUT_SECONDS
+)
+
+posts = response.json()
+
+# Print the titles of all posts
+for post in posts:
+    title = post['title']['rendered']
+    print(f"post title: {title}")
+    # check if the string STUDNET_ASSIGNED_NUMBER is in the title
+    if STUDENT_ASSIGNED_NUMBER in title:
+        print(f"Found STUDENT_ASSIGNED_NUMBER: {STUDENT_ASSIGNED_NUMBER}")
+        print(f"post id: {post['id']}")
+        # post_id = post['id']
+        sys.exit(0)
+
+print(f"Did not find STUDENT_ASSIGNED_NUMBER: {STUDENT_ASSIGNED_NUMBER}")
+sys.exit(1)
+
+print(response.status_code)
+
+# Define the post data as a dictionary
+post_data = {
+    "title": f"Just A Random Post Title - (STUDENT_ASSIGNED_NUMBER: {STUDENT_ASSIGNED_NUMBER})",
+    "content": "This is the content of the new post.",
+    "status": "publish"
+}
 
 # Send the POST request using the requests library
 TIMEOUT_SECONDS = 5

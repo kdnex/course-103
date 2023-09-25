@@ -36,4 +36,3 @@ source data.sh
 for domain in $domains; do
     check_wp_site $domain
 done
-
