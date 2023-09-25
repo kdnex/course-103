@@ -38,7 +38,7 @@
     - name: pwd
       shell: |
         pwd
-        register: pwd
+      register: pwd
       # when: false
 
     - name: Output pwd
