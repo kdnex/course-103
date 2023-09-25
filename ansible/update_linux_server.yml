@@ -41,10 +41,6 @@
         msg: "${{ mkdir.stdout }}"
       # when: false
             
-    - name: Stop playbook execution
-      meta: end_play
-      # when: false
-  
     - name: Update and Upgrade the System
       apt:
         update_cache: yes
