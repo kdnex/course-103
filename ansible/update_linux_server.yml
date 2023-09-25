@@ -5,7 +5,7 @@
   # hosts: d0026d
   hosts: wordpress
 
-  
+
 # hosts: localhost
 # connection: local
 
@@ -48,7 +48,7 @@
 
     - name: Install unzip
       apt: 
-      name: unzip
+        name: unzip
       state: present
 
     - name: Download and install sam-cli
