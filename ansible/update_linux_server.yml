@@ -5,7 +5,6 @@
   # hosts: d0026d
   hosts: wordpress
 
-
 # hosts: localhost
 # connection: local
 
@@ -29,17 +28,18 @@
       apt:
         update_cache: yes
         upgrade: dist
-        when: false
+      when: false
         
     - name: Update apt cache
       apt:
         update_cache: yes
-        # when: false
+      when: false
 
     - name: pwd
       shell: |
         pwd
         register: pwd
+      # when: false
 
     - name: Output pwd
       debug:
@@ -50,15 +50,18 @@
       apt: 
         name: unzip
       state: present
+      when: false
 
     - name: Download and install sam-cli
       shell: |
         cd ~/big
         curl -L -o sam-cli.zip https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
         unzip sam-cli.zip -d sam-installation
+      when: false
 
     - name: Install tree
       run: sudo apt-get install tree
+      when: false
 
     - name: mkdir test - first create directory structure
       run: |
@@ -70,98 +73,124 @@
         mkdir dir2/dir2-sub
         tree .
       register: mkdir
-      # when: false
+      when: false
             
     - name: Output mkdir test
       run: echo ${{ steps.mkdir.stdout }}      
-      # when: false
+      when: false
             
     - name: Install tcpdump
       run: sudo apt-get install tcpdump
+      when: false
 
     - name: Install curl
       run: sudo apt-get install curl
+      when: false
 
     - name: Install nmap
       run: sudo apt-get install nmap
+      when: false
 
     - name: Install required dependencies (GitHub cli)
       run: sudo apt-get install apt-transport-https ca-certificates
+      when: false
 
     - name: Download and install GitHub cli
       run: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && sudo apt-add-repository https://cli.github.com/packages && sudo apt-get update && sudo apt-get install gh
+      when: false
 
     - name: Install software-properties-common (ansible)
       run: sudo apt-get install software-properties-common
+      when: false
 
     - name: Add ansible PPA
       run: sudo apt-add-repository --yes --update ppa:ansible/ansible
+      when: false
 
     - name: Update apt cache if new PPA added (ansible)
       run: sudo apt-get update
+      when: false
 
     - name: Install Ansible
       run: sudo apt-get install ansible
+      when: false
 
     - name: Install Ansible AWS collection
       run: ansible-galaxy collection install community.aws
+      when: false
 
     - name: Install Python3 pip
       run: sudo apt-get install python3-pip
+      when: false
 
     - name: Install AWS CLI using pip3
       run: sudo pip3 install awscli
+      when: false
 
     - name: Install Python aws dependencies - botocore
       run: sudo pip3 install botocore
+      when: false
 
     - name: Install Python aws dependencies - boto3
       run: sudo pip3 install boto3
+      when: false
 
     - name: Install Python sql dependencies - PyMySql
       run: sudo pip3 install PyMySql
+      when: false
 
     # - name: Install docker
     #   ...
 
     - name: Install Docker dependencies
       run: sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+      when: false
 
     - name: Add Docker GPG key
       run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      when: false
 
     - name: Add Docker APT repository
       run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      when: false
 
     - name: Install Docker
       run: sudo apt-get update && sudo apt-get install docker-ce
+      when: false
 
     - name: Start and enable Docker service
       run: sudo systemctl start docker && sudo systemctl enable docker
+      when: false
 
     - name: Ensure user sami exists
       run: sudo useradd -m sami.kabir
+      when: false
 
     # - name: Allow sami.kabir to sudo to d7001d users without a password
     #   run: echo "sami.kabir ALL=(%d7001d) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 
     - name: Ensure user todd27 exists
       run: sudo useradd -m todd27
+      when: false
 
     # - name: Allow todd27 to sudo without a password
     #   run: echo "todd27 ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 
     - name: Ensure group "lp1-students" exists
       run: sudo groupadd lp1-students
+      when: false
 
     - name: Ensure group "d7001d" exists
       run: sudo groupadd d7001d
+      when: false
 
     - name: Ensure group "d0026d" exists
       run: sudo groupadd d0026d
+      when: false
 
     - name: Ensure group "a01" exists
       run: sudo groupadd a01
+      when: false
 
     - name: Retrieve db secrets from AWS Secrets Manager
       run: |
@@ -169,10 +198,11 @@
         export db_host=$(echo $my_secret | jq -r '.db_host')
         export db_user=$(echo $my_secret | jq -r '.db_user')
         export db_pass=$(echo $my_secret | jq -r '.db_pass')
+      when: false
 
     - name: Test aws s3
       run: aws s3 ls
-      # when: false
+      when: false
 
     - name: Fetch students from the course table
       community.mysql.mysql_query:
@@ -184,6 +214,7 @@
             SELECT * FROM `{{ course }}`
             # SELECT * FROM `{{ course }}` LIMIT 1
       register: query_result
+      when: false
 
     # Perform Ubuntu user management
 
@@ -192,6 +223,7 @@
       loop: "{{ query_result.query_result[0] }}"
       loop_control:
         loop_var: item
+      when: false
 
     - name: Stop playbook execution
       meta: end_play
