@@ -138,7 +138,7 @@ jobs:
         run: |
           # adhoc one line command test
           ls -l ansible/
-          ansible wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
+          ansible -vvv wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
