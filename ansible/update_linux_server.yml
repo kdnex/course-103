@@ -38,7 +38,7 @@
             
     - name: Output mkdir test
       debug: |
-        msg "${{ mkdir.stdout }}"
+        msg: "${{ mkdir.stdout }}"
       # when: false
             
     - name: Stop playbook execution
