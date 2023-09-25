@@ -83,7 +83,7 @@ jobs:
           # version 11
           # java -version
           javac WordPressPageCreation.java
-          java test_wp_create_page
+          java WordPressPageCreation
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
