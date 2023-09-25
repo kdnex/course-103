@@ -49,7 +49,7 @@ for user in users_data:
     # print(user['sis_user_id'])
 
     # Access the 'sis_user_id' key within each user dictionary and verify that it is "maharg-3"
-    if user['sis_user_id'] == "maharg-3":
+    if user['email'] == "maharg-3@ltu.se":
         print(user['sis_user_id'])
         sys.exit(0)
 

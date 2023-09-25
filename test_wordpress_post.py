@@ -45,11 +45,13 @@ headers = {
 auth_string = f"{WP_USERNAME}:{WP_KEY}"
 
 # Send the POST request using the requests library
+TIMEOUT_SECONDS = 5
 response = requests.post(
     f"{BASE_URL}/posts/",
     auth=(WP_USERNAME, WP_KEY),
     headers=headers,
-    json=post_data
+    json=post_data,
+    timeout=TIMEOUT_SECONDS
 )
 
 # Check the response
