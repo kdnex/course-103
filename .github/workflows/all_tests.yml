@@ -91,6 +91,15 @@ jobs:
         run: |
           python test_wordpress_post.py
             
+      - name: Verify WordPress post via Python
+        # if: false
+        env:
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_KEY: ${{ secrets.WP_KEY }}
+          STUDENT_ASSIGNED_NUMBER: ${{ secrets.STUDENT_ASSIGNED_NUMBER }}
+        run: |
+          python verify_wp_post.py 
+
       - name: Test WordPress page via Java
         # if: false
         env:
