@@ -49,7 +49,7 @@
     - name: Install unzip
       apt: 
         name: unzip
-      state: present
+        state: present
       when: false
 
     - name: Download and install sam-cli
