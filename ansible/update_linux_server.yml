@@ -43,7 +43,7 @@
 
     - name: Output pwd
       debug:
-      msg: "{{ pwd.stdout_lines }}"
+        msg: "{{ pwd.stdout_lines }}"
       # when: false
 
     - name: Install unzip

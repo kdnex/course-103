@@ -24,7 +24,7 @@ jobs:
           ls -l
         
       - name: Test DNS Server domain resolution
-        # if: false
+        if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./test_dig_resolve_ip.sh
@@ -46,28 +46,28 @@ jobs:
           fi
 
       - name: Test if Web site ports 80 and 443 are listening
-        # if: false
+        if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./test_nc_wp_listen.sh
           ./test_nc_wp_listen.sh
 
       - name: Test is Web site is serving web pages on ports 80 and 443
-        # if: false
+        if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./test_curl_website.sh
           ./test_curl_website.sh
 
       - name: Test Web sites' certificates
-        # if: false
+        if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./test_curl_certificate.sh
           ./test_curl_certificate.sh
 
       - name: Test WordPress user names via Bash
-        # if: false
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -76,14 +76,14 @@ jobs:
           ./test_wordpress_users.sh
                             
       - name: Test Canvas user names via Python
-        # if: false
+        if: false
         env:
           CANVAS_TOKEN: ${{ secrets.CANVAS_TOKEN }}
         run: |
           python test_canvas_users.py
                     
       - name: Test WordPress post via Python
-        # if: false
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -92,7 +92,7 @@ jobs:
           python test_wordpress_post.py
             
       - name: Verify WordPress post via Python
-        # if: false
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -102,7 +102,7 @@ jobs:
           python verify_wp_post.py 
 
       - name: Test WordPress page via Java
-        # if: false
+        if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -113,7 +113,7 @@ jobs:
           java WordPressPageCreation
           
       - name: Test aws cli and show any list and aws s3 buckets which include the string "d7001d"
-        # if: false
+        if: false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
