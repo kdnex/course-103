@@ -102,6 +102,7 @@ jobs:
           java WordPressPageCreation
           
       - name: Test aws cli and show any list andy d7001d buckets
+        if: false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -110,9 +111,25 @@ jobs:
           which aws
           aws s3 ls | grep d7001d
 
-      - name: Test if ansible is installed
+      - name: Check which version of ansible is installed
+        if: false
         run: |
           ansible --version
+
+      - name: Set up SSH
+        env:
+          SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
+        run: |
+          pwd
+          ls ~
+          echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
+          chmod 600 ~/.ssh/wordpress.pem
+          ls -l ~/.ssh
+          ssh -t wordpress 'echo "Hello"'
+
+      - name: Run Ansible playbook
+        if: false
+        run: ansible-playbook -i ansible/inventory.ini ansible/test_playbook.yml
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
