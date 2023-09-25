@@ -3,6 +3,7 @@ all:
   hosts:
     wordpress:
       ansible_host: toddbooth.com
+      user: bitnami
     localhost:
     server2:
       ansible_host: 192.168.1.102

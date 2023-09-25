@@ -130,14 +130,14 @@ jobs:
           cp .ssh/config ~/.ssh/config
           ls -l ~/.ssh
 
-          ssh -t wordpress 'echo "Hello bitnami Wordpress server"'
+          ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
 
       - name: Run Ansible playbook
         run: |
           # ansible-playbook -i ansible/inventory.ini ansible/test_playbook.yml
 
           # adhoc one line command test
-          ansible -i ansible/inventory.yml wordpress -m command -a "echo Hello"
+          ansible -i ansible/inventory.yml wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
