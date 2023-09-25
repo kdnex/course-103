@@ -3,7 +3,7 @@ all:
   hosts:
     wordpress:
       ansible_host: toddbooth.com
-      user: bitnami
+      ansible_user: bitnami
       # ansible_ssh_private_key_file: ~/.ssh/wordpress.pem
     localhost:
     server2:
