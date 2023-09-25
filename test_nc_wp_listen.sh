@@ -33,7 +33,7 @@ source data.sh
 
 # create loop to test all sub-domains
 
-for domain in "$domains"; do
-    check_wp_site "$domain"
+for domain in $domains; do
+    check_wp_site $domain
 done
 
