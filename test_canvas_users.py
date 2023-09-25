@@ -1,7 +1,11 @@
+"""
+This is a Python script that demonstrates basic usage of the Canvas API.
+"""
+
 import json
 import os
-import requests
 import sys
+import requests
 
 # network programming
 BASE_URL = "https://canvas.ltu.se/api/v1"
@@ -24,9 +28,12 @@ headers = {
     "Authorization": "Bearer " + CANVAS_TOKEN,
 }
 
+TIMEOUT_SECONDS = 5
 response = requests.get(
     f"{BASE_URL}/courses/{COURSE_ID}/users",
-    headers=headers)
+    headers=headers,
+    timeout=TIMEOUT_SECONDS
+)
 
 print(response.status_code)
 

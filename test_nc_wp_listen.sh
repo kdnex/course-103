@@ -5,11 +5,11 @@ check_wp_site() {
     echo -n "Checking $domain... "
     
     # Check if the domain is listening on port 80 (HTTP)
-    nc -z -w 1 $domain 80
+    nc -z -w 1 "$domain" 80
     http_result=$?
 
     # Check if the domain is listening on port 443 (HTTPS)
-    nc -z -w 1 $domain 443
+    nc -z -w 1 "$domain" 443
     https_result=$?
 
     # Check and print the results
@@ -33,7 +33,7 @@ source data.sh
 
 # create loop to test all sub-domains
 
-for domain in $domains; do
-    check_wp_site $domain
+for domain in "$domains"; do
+    check_wp_site "$domain"
 done
 

@@ -1,3 +1,7 @@
+"""
+This is a Python script that demonstrates basic usage of the WordPress API.
+"""
+
 import os
 import sys
 import requests
