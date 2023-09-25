@@ -140,9 +140,9 @@ jobs:
           ls -l ansible/
           
           # Use 'set -e' to exit immediately if any command fails
-          set -e
+          # set -e
           
-          ansible -vvv wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
+          ansible -vvv wordpress -m command -a "echo2 Hello bitnami Wordpress server from Ansible."
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
