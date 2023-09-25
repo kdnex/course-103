@@ -135,7 +135,7 @@ jobs:
       - name: Run Ansible playbook
         run: |
           # ansible-playbook -i ansible/inventory.ini ansible/test_playbook.yml
-          ansible -i ansible/inventory.ini wordpress -m command -a "echo Hello"
+          ansible -i ansible/inventory.yml wordpress -m command -a "echo Hello"
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
