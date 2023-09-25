@@ -101,7 +101,7 @@ jobs:
           javac WordPressPageCreation.java
           java WordPressPageCreation
           
-      - name: Set up AWS CLI
+      - name: Test aws cli and show any list andy d7001d buckets
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -109,6 +109,10 @@ jobs:
         run: |
           which aws
           aws s3 ls | grep d7001d
+
+      - name: Test if ansible is installed
+        run: |
+          ansible --version
 
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
