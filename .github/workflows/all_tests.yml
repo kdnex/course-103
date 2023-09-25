@@ -156,6 +156,13 @@ jobs:
           
           ansible wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
+      - name: Update new Linux server
+        env:
+          ANSIBLE_CONFIG: "ansible/ansible.cfg"
+        run: |
+          chmod +x ansible/update_linux_server.sh
+          ansible/update_linux_server.sh
+
       - name: To get here, all tests have passed, so deployment will now begin
         run: |
           echo "All tests have passed, so deployment will now begin here ..."

@@ -1,0 +1,198 @@
+---
+- name: Install and configure a new Lp1 student server which is also used for development, docker, testing, and grading
+  become: yes
+  gather_facts: yes
+  # hosts: d0026d
+  hosts: wordpress
+
+# hosts: localhost
+# connection: local
+
+  vars:
+    groups:
+      - students
+    #  - d7001d
+      - d0026d
+    db_name: Course_Shared 
+# user: np-todboo-1     
+
+# prefix: np
+# course: d7001d # Cloud Network Programming
+
+    prefix: a01
+    course: d0026d # Computer System Administration
+
+    tasks:
+
+    - name: Update and Upgrade the System
+      apt:
+        update_cache: yes
+        upgrade: dist
+        when: false
+        
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        # when: false
+
+    - name: pwd
+      shell: |
+        pwd
+        register: pwd
+
+    - name: Output pwd
+      debug:
+      msg: "{{ pwd.stdout_lines }}"
+      # when: false
+
+    - name: Install unzip
+      apt: 
+      name: unzip
+      state: present
+
+    - name: Download and install sam-cli
+      shell: |
+        cd ~/big
+        curl -L -o sam-cli.zip https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+        unzip sam-cli.zip -d sam-installation
+
+    - name: Install tree
+      run: sudo apt-get install tree
+
+    - name: mkdir test - first create directory structure
+      run: |
+        cd /tmp
+        mkdir dir1
+        mkdir dir2
+        mkdir dir3
+        mkdir dir1/dir1-sub
+        mkdir dir2/dir2-sub
+        tree .
+      register: mkdir
+      # when: false
+            
+    - name: Output mkdir test
+      run: echo ${{ steps.mkdir.stdout }}      
+      # when: false
+            
+    - name: Install tcpdump
+      run: sudo apt-get install tcpdump
+
+    - name: Install curl
+      run: sudo apt-get install curl
+
+    - name: Install nmap
+      run: sudo apt-get install nmap
+
+    - name: Install required dependencies (GitHub cli)
+      run: sudo apt-get install apt-transport-https ca-certificates
+
+    - name: Download and install GitHub cli
+      run: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 && sudo apt-add-repository https://cli.github.com/packages && sudo apt-get update && sudo apt-get install gh
+
+    - name: Install software-properties-common (ansible)
+      run: sudo apt-get install software-properties-common
+
+    - name: Add ansible PPA
+      run: sudo apt-add-repository --yes --update ppa:ansible/ansible
+
+    - name: Update apt cache if new PPA added (ansible)
+      run: sudo apt-get update
+
+    - name: Install Ansible
+      run: sudo apt-get install ansible
+
+    - name: Install Ansible AWS collection
+      run: ansible-galaxy collection install community.aws
+
+    - name: Install Python3 pip
+      run: sudo apt-get install python3-pip
+
+    - name: Install AWS CLI using pip3
+      run: sudo pip3 install awscli
+
+    - name: Install Python aws dependencies - botocore
+      run: sudo pip3 install botocore
+
+    - name: Install Python aws dependencies - boto3
+      run: sudo pip3 install boto3
+
+    - name: Install Python sql dependencies - PyMySql
+      run: sudo pip3 install PyMySql
+
+    # - name: Install docker
+    #   ...
+
+    - name: Install Docker dependencies
+      run: sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+    - name: Add Docker GPG key
+      run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+    - name: Add Docker APT repository
+      run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    - name: Install Docker
+      run: sudo apt-get update && sudo apt-get install docker-ce
+
+    - name: Start and enable Docker service
+      run: sudo systemctl start docker && sudo systemctl enable docker
+
+    - name: Ensure user sami exists
+      run: sudo useradd -m sami.kabir
+
+    # - name: Allow sami.kabir to sudo to d7001d users without a password
+    #   run: echo "sami.kabir ALL=(%d7001d) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+
+    - name: Ensure user todd27 exists
+      run: sudo useradd -m todd27
+
+    # - name: Allow todd27 to sudo without a password
+    #   run: echo "todd27 ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+
+    - name: Ensure group "lp1-students" exists
+      run: sudo groupadd lp1-students
+
+    - name: Ensure group "d7001d" exists
+      run: sudo groupadd d7001d
+
+    - name: Ensure group "d0026d" exists
+      run: sudo groupadd d0026d
+
+    - name: Ensure group "a01" exists
+      run: sudo groupadd a01
+
+    - name: Retrieve db secrets from AWS Secrets Manager
+      run: |
+        my_secret=$(aws secretsmanager get-secret-value --secret-id db_credentials --query SecretString --output text)
+        export db_host=$(echo $my_secret | jq -r '.db_host')
+        export db_user=$(echo $my_secret | jq -r '.db_user')
+        export db_pass=$(echo $my_secret | jq -r '.db_pass')
+
+    - name: Test aws s3
+      run: aws s3 ls
+      # when: false
+
+    - name: Fetch students from the course table
+      community.mysql.mysql_query:
+        login_host: "{{ db_host }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_pass }}"
+        login_db: "{{ db_name }}"
+        query: |
+            SELECT * FROM `{{ course }}`
+            # SELECT * FROM `{{ course }}` LIMIT 1
+      register: query_result
+
+    # Perform Ubuntu user management
+
+    - name: Process all students in the query result
+      include_tasks: process_student.yml
+      loop: "{{ query_result.query_result[0] }}"
+      loop_control:
+        loop_var: item
+
+    - name: Stop playbook execution
+      meta: end_play
+      # when: false
+  
