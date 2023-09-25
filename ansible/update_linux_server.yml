@@ -60,11 +60,12 @@
       when: false
 
     - name: Install tree
-      run: sudo apt-get install tree
+      shell: |
+        sudo apt-get install tree
       when: false
 
     - name: mkdir test - first create directory structure
-      run: |
+      shell: |
         cd /tmp
         mkdir dir1
         mkdir dir2
@@ -76,11 +77,13 @@
       when: false
             
     - name: Output mkdir test
-      run: echo ${{ steps.mkdir.stdout }}      
+      shell: |
+        echo ${{ steps.mkdir.stdout }}      
       when: false
             
     - name: Install tcpdump
-      run: sudo apt-get install tcpdump
+      shell: |
+        sudo apt-get install tcpdump
       when: false
 
     - name: Install curl
@@ -88,7 +91,8 @@
       when: false
 
     - name: Install nmap
-      run: sudo apt-get install nmap
+      shell: |
+        sudo apt-get install nmap
       when: false
 
     - name: Install required dependencies (GitHub cli)
