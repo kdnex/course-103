@@ -119,12 +119,12 @@ jobs:
       - name: Set up SSH
         env:
           SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
+          SSH_HOME: /home/runner/work/course-103/course-103/.ssh
         run: |
           pwd
-          ls ~
-          echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
-          chmod 600 ~/.ssh/wordpress.pem
-          ls -l ~/.ssh
+          echo "$SSH_WORDPRESS_KEY" > .ssh/wordpress.pem
+          chmod 600 .ssh/wordpress.pem
+          ls -l .ssh
           ssh -t wordpress 'echo "Hello"'
 
       - name: Run Ansible playbook
