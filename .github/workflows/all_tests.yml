@@ -30,6 +30,9 @@ jobs:
       - name: Test Python scripts via pytest
         # if: false
         run: |
+          # install pytest
+          pip install pytest
+
           # Execute pytest binary
           pytest
 
