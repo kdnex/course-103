@@ -179,6 +179,7 @@ jobs:
           ansible wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
       - name: Update new Linux server
+        if: false
         env:
           ANSIBLE_CONFIG: "ansible/ansible.cfg"
         run: |
