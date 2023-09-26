@@ -31,8 +31,8 @@ jobs:
         if: false
         run: |
           # Execute the external script.sh file
-          chmod +x ./test_dig_resolve_ip.sh
-          ./test_dig_resolve_ip.sh
+          chmod +x ./dig_resolve_ip.sh
+          ./dig_resolve_ip.sh
 
       - name: Test if Web site answers a ping request, but just send one ping request
         if: false
@@ -53,22 +53,22 @@ jobs:
         if: false
         run: |
           # Execute the external script.sh file
-          chmod +x ./test_nc_wp_listen.sh
-          ./test_nc_wp_listen.sh
+          chmod +x ./nc_wp_listen.sh
+          ./nc_wp_listen.sh
 
       - name: Test is Web site is serving web pages on ports 80 and 443
         if: false
         run: |
           # Execute the external script.sh file
-          chmod +x ./test_curl_website.sh
-          ./test_curl_website.sh
+          chmod +x ./curl_website.sh
+          ./curl_website.sh
 
       - name: Test Web sites' certificates
         if: false
         run: |
           # Execute the external script.sh file
-          chmod +x ./test_curl_certificate.sh
-          ./test_curl_certificate.sh
+          chmod +x ./curl_certificate.sh
+          ./curl_certificate.sh
 
       - name: Test WordPress user names via Bash
         if: false
@@ -76,15 +76,15 @@ jobs:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
         run: |
-          chmod +x ./test_wordpress_users.sh
-          ./test_wordpress_users.sh
+          chmod +x ./wordpress_users.sh
+          ./wordpress_users.sh
                             
       - name: Test Canvas user names via Python
         if: false
         env:
           CANVAS_TOKEN: ${{ secrets.CANVAS_TOKEN }}
         run: |
-          python test_canvas_users.py
+          python canvas_users.py
                     
       - name: Test WordPress post via Python
         if: false
@@ -93,7 +93,7 @@ jobs:
           WP_KEY: ${{ secrets.WP_KEY }}
           STUDENT_ASSIGNED_NUMBER: ${{ secrets.STUDENT_ASSIGNED_NUMBER }}
         run: |
-          python test_wordpress_post.py
+          python wordpress_post.py
             
       - name: Verify WordPress post via Python
         if: false
