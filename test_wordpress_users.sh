@@ -3,9 +3,8 @@
 # Get list of Wordpress usernames
 # requires WP_USERNAME and WP_KEY environment variables
 
-echo "WP_USERNAME: $WP_USERNAME"
-echo "WP_KEY: $WP_KEY"
-echo 'response=$(curl -X GET -u "${WP_USERNAME}:${WP_KEY}" ${BASE_URL}/users)'
+# echo "WP_USERNAME: $WP_USERNAME"
+# echo "WP_KEY: $WP_KEY"
 
 # PROTOCOL="http"
 PROTOCOL="https"
