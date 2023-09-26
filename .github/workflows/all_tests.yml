@@ -27,7 +27,13 @@ jobs:
           echo "Current directory: $PWD"
           ls -l
         
-      - name: Test DNS Server domain resolution
+      - name: Test Python scripts via pytest
+        # if: false
+        run: |
+          # Execute pytest binary
+          pytest
+
+        - name: Test DNS Server domain resolution
         if: false
         run: |
           # Execute the external script.sh file
