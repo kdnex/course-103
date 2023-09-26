@@ -16,11 +16,12 @@
     db_name: Course_Shared 
 # user: np-todboo-1     
 
-# prefix: np
-# course: d7001d # Cloud Network Programming
+    prefix: np
+    # course: d7001d # Cloud Network Programming
 
-    prefix: a01
-    course: d0026d # Computer System Administration
+    # prefix: a01
+    # course: d0026d # Computer System Administration
+    course: d0071d # network programming and distributed applications
 
   tasks:
 

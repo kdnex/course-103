@@ -1,0 +1,126 @@
+---
+
+    - name: Assign variables from query_result
+      set_fact:
+        StudentId: "{{ item.StudentId }}"
+        FirstName: "{{ item.FirstName }}"
+        LastName: "{{ item.LastName }}"
+        Email: "{{ item.Email }}"
+        Password: "{{ item.Password }}"
+        CanvasId: "{{ item.CanvasId }}"
+        User: "{{ prefix }}-{{ item.StudentId }}"
+
+    - name: Show current user
+      debug:
+        msg: "Current user is {{ User }}"
+
+    - name: Show the current user details
+      debug:
+        var: item
+      # when: false
+
+    - name: Ensure user exists
+      ansible.builtin.user:
+        name: "{{ User }}"
+        create_home: 
+        shell: /bin/bash
+        state: present
+
+    - name: Give the user a password
+      shell: |
+        echo "{{ User }}:{{ Password }}" | sudo chpasswd 
+      # when: false
+
+    - name: Ensure .ssh directory exists
+      file:
+        path: "/home/{{ User }}/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ User }}"
+        group: "{{ User }}"
+
+    - name: Ensure .aws directory exists
+      file:
+        path: "/home/{{ User }}/.aws"
+        state: directory
+        mode: '0700'
+        owner: "{{ User }}"
+        group: "{{ User }}"
+
+    - name: Generate SSH keys
+      openssh_keypair:
+        path: "/home/{{ User }}/.ssh/id_rsa"
+        size: 2048
+        owner: "{{ User }}"
+        group: "{{ User }}"
+        mode: '0600'
+        type: rsa
+      become: yes
+      # when: false
+
+    - name: Create ssh config file
+      ansible.builtin.copy:
+        dest: "/home/{{ User }}/.ssh/config"
+        content: |
+          Host host-001
+            HostName host-001.example.com
+            User ubuntu
+            StrictHostKeyChecking no
+            IdentityFile ~/.ssh/id_rsa.pem
+            UserKnownHostsFile /dev/null
+            LogLevel ERROR
+        owner: "{{ User }}"
+        group: "{{ User }}"
+        mode: '0700'
+      # when: false
+
+    - name: Load id_rsa file content into a variable
+      ansible.builtin.slurp:
+        path: "/home/{{ User }}/.ssh/id_rsa"
+      register: id_rsa_contents
+
+    - set_fact:
+        id_rsa_variable: "{{ id_rsa_contents['content'] | b64decode }}"
+
+    - name: Update SshKeyPrivate field in the course table
+      community.mysql.mysql_query:
+        login_host: "{{ db_host }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_pass }}"
+        login_db: "{{ db_name }}"
+
+        # query: "UPDATE d0026d SET SshKeyPrivate='testKey3' WHERE StudentId='mohalh-2'"
+        query: "UPDATE {{ course }} SET SshKeyPrivate='{{ id_rsa_variable }}' WHERE StudentId='{{ item.StudentId }}'"
+
+      register: update_result
+      # when: false
+
+    - name: Ensure repos directory exists
+      file:
+        path: "/home/{{ User }}/repos"
+        state: directory
+        mode: '0700'
+        owner: "{{ User }}"
+        group: "{{ User }}"
+
+    - name: Add user to "lp1-students" group
+      ansible.builtin.user:
+        name: "{{ User }}"
+        groups: lp1-students
+        append: yes         
+
+    - name: Add user to "d7001d" group
+      ansible.builtin.user:
+        name: "{{ User }}"
+        groups: d7001d
+        append: yes
+      when: prefix == "np"
+      
+    - name: Add user to "d0026d" group
+      ansible.builtin.user:
+        name: "{{ User }}"
+        groups: d0026d
+        append: yes
+      when: prefix == "csa"
+      
+               
