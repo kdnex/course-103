@@ -33,7 +33,7 @@ jobs:
           # Execute pytest binary
           pytest
 
-        - name: Test DNS Server domain resolution
+      - name: Test DNS Server domain resolution
         if: false
         run: |
           # Execute the external script.sh file
