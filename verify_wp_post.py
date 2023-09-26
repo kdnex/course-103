@@ -53,12 +53,15 @@ auth_string = f"{WP_USERNAME}:{WP_KEY}"
 
 TIMEOUT_SECONDS = 5
 response = requests.get(
-    f"{BASE_URL}/posts",
+    f"{BASE_URL}/posts?per_page=100",
     headers=headers,
     timeout=TIMEOUT_SECONDS
 )
 
 posts = response.json()
+
+# print the number of items
+print(f"Number of posts: {len(posts)}")
 
 # Print the titles of all posts
 for post in posts:

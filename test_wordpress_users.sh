@@ -10,7 +10,10 @@ echo 'response=$(curl -X GET -u "${WP_USERNAME}:${WP_KEY}" ${BASE_URL}/users)'
 # PROTOCOL="http"
 PROTOCOL="https"
 BASE_URL="$PROTOCOL://toddbooth.com/wp-json/wp/v2"
-response=$(curl -X GET -u "${WP_USERNAME}:${WP_KEY}" ${BASE_URL}/users)
+response=$(curl -X GET -u "${WP_USERNAME}:${WP_KEY}" ${BASE_URL}/users?per_page=100)
+
+# print the number of users
+echo "number of users: $(jq '. | length' <<< "$response")"
 
 # Check if the following user name exists
 TEST_NAME="d7001dbogpat4"

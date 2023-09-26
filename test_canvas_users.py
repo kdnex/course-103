@@ -46,6 +46,9 @@ if response.status_code != 200:
 
 users = response.json()
 
+# Print the number of users in the course
+print(f"Number of users in the course: {len(users)}")
+
 for user in users:
 
     # Pretty print the JSON data
