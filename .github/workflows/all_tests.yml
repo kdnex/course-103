@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Set the maximum duration for this job (in minutes)
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
 
