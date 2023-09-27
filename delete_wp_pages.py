@@ -46,10 +46,11 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# retrive all the WordPress posts
+# retrive some the WordPress posts
+NUMBER=5
 TIMEOUT_SECONDS = 5
 response = requests.get(
-    f"{BASE_URL}/pages?per_page=5",
+    f"{BASE_URL}/pages?per_page={NUMBER}",
     headers=headers,
     timeout=TIMEOUT_SECONDS
 )
@@ -70,7 +71,7 @@ for page in pages:
         headers=headers,
         timeout=TIMEOUT_SECONDS
     )
-    print(f"status_code: {response.status_code})
+    print(f"status_code: {response.status_code}")
     if response.status_code == 200:
         print("Page deleted successfully!")
     else:
