@@ -36,30 +36,27 @@ jobs:
           # home is /home/runner
 
           mkdir ~/.ssh
-          echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
+          # echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
           chmod 600 ~/.ssh/wordpress.pem
           cp .ssh/config ~/.ssh/config
           ls -l ~/.ssh
 
-          ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
+          # ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
 
-<<<<<<< HEAD
       - name: Stop processing, failure on purpose
         run: exit 1
   
-=======
       - name: exit ci/cd pipeline
         run: exit 1
 
->>>>>>> 1a96c832a59d7b74d9e8354e727a24089cf91734
       - name: Test Python scripts via pytest
         # if: false
         run: |
           # install pytest
           pip install pytest
 
-        # Execute pytest binary
-        pytest
+          # Execute pytest binary
+          pytest
 
       - name: Test DNS Server domain resolution
         # if: false
