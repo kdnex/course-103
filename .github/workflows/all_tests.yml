@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Set the maximum duration for this job (in minutes)
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
 
@@ -43,26 +43,32 @@ jobs:
 
           ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
 
+<<<<<<< HEAD
       - name: Stop processing, failure on purpose
         run: exit 1
   
+=======
+      - name: exit ci/cd pipeline
+        run: exit 1
+
+>>>>>>> 1a96c832a59d7b74d9e8354e727a24089cf91734
       - name: Test Python scripts via pytest
         # if: false
         run: |
           # install pytest
           pip install pytest
 
-          # Execute pytest binary
-          pytest
+        # Execute pytest binary
+        pytest
 
       - name: Test DNS Server domain resolution
-        if: false
+        # if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./dig_resolve_ip.sh
           ./dig_resolve_ip.sh
 
-      - name: Test if Web site answers a ping request, but just send one ping request
+      - name: Test if Web site answers a ping request, but just send one ping request (don't run)
         if: false
         run: |
           # runner is in Azure, which disables outgoing icmp packets, so this will not work from GitHub actions
@@ -78,28 +84,28 @@ jobs:
           fi
 
       - name: Test if Web site ports 80 and 443 are listening
-        if: false
+        # if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./nc_wp_listen.sh
           ./nc_wp_listen.sh
 
       - name: Test is Web site is serving web pages on ports 80 and 443
-        if: false
+        # if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./curl_website.sh
           ./curl_website.sh
 
       - name: Test Web sites' certificates
-        if: false
+        # if: false
         run: |
           # Execute the external script.sh file
           chmod +x ./curl_certificate.sh
           ./curl_certificate.sh
 
       - name: Test WordPress user names via Bash
-        if: false
+        # if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -108,14 +114,14 @@ jobs:
           ./wordpress_users.sh
                             
       - name: Test Canvas user names via Python
-        if: false
+        # if: false
         env:
           CANVAS_TOKEN: ${{ secrets.CANVAS_TOKEN }}
         run: |
           python canvas_users.py
                     
       - name: Test WordPress post via Python
-        if: false
+        # if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -124,7 +130,7 @@ jobs:
           python wordpress_post.py
             
       - name: Verify WordPress post via Python
-        if: false
+        # if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -152,7 +158,7 @@ jobs:
           python delete_wp_pages.py
 
       - name: Test WordPress page via Java
-        if: false
+        # if: false
         env:
           WP_USERNAME: ${{ secrets.WP_USERNAME }}
           WP_KEY: ${{ secrets.WP_KEY }}
@@ -163,7 +169,7 @@ jobs:
           java WordPressPageCreation
           
       - name: Test aws cli and show any list and aws s3 buckets which include the string "d7001d"
-        if: false
+        # if: false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -191,7 +197,7 @@ jobs:
           ansible wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
       - name: Update new Linux server
-        if: false
+        # if: false
         env:
           ANSIBLE_CONFIG: "ansible/ansible.cfg"
         run: |
