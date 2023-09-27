@@ -43,8 +43,8 @@ jobs:
           chmod +x ./dig_resolve_ip.sh
           ./dig_resolve_ip.sh
 
-      - name: Test if Web site answers a ping request, but just send one ping request
-        # if: false
+      - name: Test if Web site answers a ping request, but just send one ping request (don't run)
+        if: false
         run: |
           # runner is in Azure, which disables outgoing icmp packets, so this will not work from GitHub actions
           ping -c 1 -W 5 toddbooth.com
