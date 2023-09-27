@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Set the maximum duration for this job (in minutes)
-    timeout-minutes: 25
+    timeout-minutes: 10
 
     steps:
 
@@ -188,7 +188,7 @@ jobs:
           ansible wordpress -m command -a "echo Hello bitnami Wordpress server from Ansible."
 
       - name: Update new Linux server
-        # if: false
+        when: false
         env:
           ANSIBLE_CONFIG: "ansible/ansible.cfg"
         run: |
