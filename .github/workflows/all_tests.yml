@@ -27,6 +27,25 @@ jobs:
           echo "Current directory: $PWD"
           ls -l
         
+      - name: Set up SSH
+        # if: false
+        env:
+          SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
+          # SSH_HOME: /home/runner/work/course-103/course-103/.ssh
+        run: |
+          # home is /home/runner
+
+          mkdir ~/.ssh
+          echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
+          chmod 600 ~/.ssh/wordpress.pem
+          cp .ssh/config ~/.ssh/config
+          ls -l ~/.ssh
+
+          ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
+
+      - name: Stop processing, failure on purpose
+        run: exit 1
+  
       - name: Test Python scripts via pytest
         # if: false
         run: |
@@ -157,22 +176,6 @@ jobs:
         # if: false
         run: |
           ansible --version
-
-      - name: Set up SSH
-        # if: false
-        env:
-          SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
-          # SSH_HOME: /home/runner/work/course-103/course-103/.ssh
-        run: |
-          # home is /home/runner
-
-          mkdir ~/.ssh
-          echo "$SSH_WORDPRESS_KEY" > ~/.ssh/wordpress.pem
-          chmod 600 ~/.ssh/wordpress.pem
-          cp .ssh/config ~/.ssh/config
-          ls -l ~/.ssh
-
-          ssh -t wordpress 'echo "Hello bitnami Wordpress server from actions inline commands."'
 
       - name: Run Ansible playbook
         # if: false
