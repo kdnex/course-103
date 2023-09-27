@@ -46,11 +46,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# Create the HTTP Basic Authentication string
-auth_string = f"{WP_USERNAME}:{WP_KEY}"
-
 # retrive all the WordPress posts
-
 TIMEOUT_SECONDS = 5
 response = requests.get(
     f"{BASE_URL}/pages?per_page=5",
@@ -62,24 +58,22 @@ pages = response.json()
 
 # print the number of items
 print(f"Number of pages: {len(pages)}")
-# sys.exit(1)
 
 # Delete the pages
+TIMEOUT_SECONDS = 5
 for page in pages:
     title = page['title']['rendered']
-    print(f"page title: {title}")
     print(f"Deleting page: {title}")
-    TIMEOUT_SECONDS = 5
     response = requests.delete(
         f"{BASE_URL}/pages/{page['id']}",
         auth=(WP_USERNAME, WP_KEY),
         headers=headers,
         timeout=TIMEOUT_SECONDS
     )
-    print(response.status_code)
+    print(f"status_code: {response.status_code})
     if response.status_code == 200:
         print("Page deleted successfully!")
     else:
-        print(f"Error: {response.status_code}")
+        print("Error:")
         print(response.text)
         sys.exit(1)
