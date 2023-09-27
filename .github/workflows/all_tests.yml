@@ -33,6 +33,9 @@ jobs:
           SSH_WORDPRESS_KEY: ${{ secrets.SSH_WORDPRESS_KEY }}
           # SSH_HOME: /home/runner/work/course-103/course-103/.ssh
         run: |
+
+          echo "this is a test of ssh 1" > test_ssh1.txt
+          echo "this is a test of ssh 2" > ~/test_ssh2.txt
           # home is /home/runner
 
           mkdir ~/.ssh
